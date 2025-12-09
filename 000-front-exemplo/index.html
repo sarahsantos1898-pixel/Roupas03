@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loja de Roupas Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="bg-texture"></div>
+  <div class="app-shell">
+    <nav class="top-bar">
+      <div class="brand">
+        <span class="brand-emoji">🛍️</span>
+        <div>
+          <strong>Fashion Store</strong>
+          <small>compre com estilo</small>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-btn active" data-view-target="login">Login</button>
+        <button class="nav-btn" data-view-target="admin">Admin</button>
+        <button class="nav-btn" data-view-target="loja">Loja</button>
+      </div>
+      <div class="session-chip" id="sessionChip">Visitante</div>
+      <div class="cart-indicator">
+        <span id="cartCount">0</span>
+        🛒
+      </div>
+    </nav>
+
+    <section class="view login-view active" data-view="login">
+      <div class="login-grid">
+        <div class="login-copy">
+          <p class="eyebrow">Bem-vindo ao painel</p>
+          <h1>Gerencie sua loja de roupas online</h1>
+          <p>Crie e personalize sua loja virtual com facilidade. Adicione produtos, configure campos de entrega e
+            acompanhe os pedidos.</p>
+          <ul>
+            <li>Catálogo de produtos personalizável;</li>
+            <li>Sistema de carrinho de compras;</li>
+            <li>Pré-visualização em tempo real;</li>
+            <li>Gestão de pedidos local.</li>
+          </ul>
+        </div>
+        <div class="card login-card">
+          <header>
+            <p class="eyebrow">Painel Administrativo</p>
+            <h2>Login seguro</h2>
+          </header>
+          <form id="loginForm" class="login-form">
+            <label>
+              Email administrativo
+              <input type="email" id="loginEmail" name="loginEmail" placeholder="admin@loja.com" required>
+            </label>
+            <label>
+              Senha
+              <input type="password" id="loginPassword" name="loginPassword" placeholder="••••••••" required>
+            </label>
+            <label class="checkbox remember">
+              <input type="checkbox" id="rememberMe" name="rememberMe" checked>
+              <span>Manter conectado</span>
+            </label>
+            <button type="submit" class="primary">Entrar no painel</button>
+            <p id="loginStatus" class="muted"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="view admin-view" data-view="admin">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Painel de Controle</p>
+          <h1>Configure sua loja de roupas</h1>
+          <p>Adicione produtos, personalize campos de entrega e configure métodos de pagamento. Tudo salvo
+            localmente no <strong>localStorage</strong>.</p>
+        </div>
+        <div class="hero-card">
+          <span>🛒</span>
+          <p>Modo administrador ativo</p>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel config-panel">
+          <header class="panel-header">
+            <div>
+              <p class="eyebrow">Configurações da Loja</p>
+              <h2>Personalização da Loja</h2>
+            </div>
+            <button id="resetConfig" class="ghost-button" type="button">Restaurar padrão</button>
+          </header>
+
+          <section class="card config-library">
+            <header class="config-library__header">
+              <div>
+                <p class="eyebrow">Configurações da loja</p>
+                <h3>Biblioteca de configurações</h3>
+                <p class="muted micro">Apenas uma configuração pode ficar ativa. Ative para editar.</p>
+              </div>
+              <form id="newConfigForm" class="config-inline-form">
+                <input id="newConfigName" type="text" placeholder="Nome da loja">
+                <label class="checkbox clone-toggle">
+                  <input type="checkbox" id="cloneActiveConfig" checked>
+                  <span>Clonar configuração atual</span>
+                </label>
+                <button type="submit" class="primary">Criar Loja</button>
+              </form>
+            </header>
+            <div id="configList" class="config-list"></div>
+          </section>
+
+          <form id="blueprintForm" class="card">
+            <div class="field-group">
+              <label for="formTitle">Nome da Loja</label>
+              <input id="formTitle" type="text" placeholder="Ex.: Fashion Store" required>
+            </div>
+            <div class="field-group">
+              <label for="formDescription">Descrição da Loja</label>
+              <textarea id="formDescription" rows="3"
+                placeholder="Descreva sua loja para os clientes..."></textarea>
+            </div>
+            <div class="field-group dual">
+              <div>
+                <label for="accentColor">Cor da marca</label>
+                <input id="accentColor" type="color" value="#e63946">
+              </div>
+              <div>
+                <label for="heroEmoji">Emoji da loja</label>
+                <input id="heroEmoji" type="text" maxlength="2" placeholder="👕">
+              </div>
+            </div>
+          </form>
+
+          <section class="card">
+            <h3>Adicionar campo de entrega</h3>
+            <form id="newFieldForm" class="field-grid">
+              <label>
+                Rótulo
+                <input id="fieldLabel" name="fieldLabel" type="text" placeholder="Ex.: Telefone" required>
+              </label>
+              <label>
+                Tipo
+                <select id="fieldType" name="fieldType">
+                  <option value="text">Texto</option>
+                  <option value="email">Email</option>
+                  <option value="tel">Telefone</option>
+                  <option value="number">Número</option>
+                  <option value="date">Data</option>
+                  <option value="textarea">Área de texto</option>
+                </select>
+              </label>
+              <label>
+                Placeholder
+                <input id="fieldPlaceholder" name="fieldPlaceholder" type="text" placeholder="Digite aqui...">
+              </label>
+              <label class="checkbox">
+                <input id="fieldRequired" name="fieldRequired" type="checkbox" checked>
+                <span>Obrigatório</span>
+              </label>
+              <button type="submit" class="primary">Adicionar Campo</button>
+            </form>
+          </section>
+
+          <section class="card field-list">
+            <header>
+              <h3>Campos de entrega ativos</h3>
+              <p class="muted">Organize a ordem dos campos</p>
+            </header>
+            <div id="fieldsContainer" class="list-body empty">
+              <p class="muted">Nenhum campo configurado ainda.</p>
+            </div>
+          </section>
+
+          <section class="card">
+            <h3>Adicionar Produto</h3>
+            <form id="newProductForm" class="field-grid">
+              <label>
+                Nome do Produto
+                <input name="productName" type="text" placeholder="Ex.: Camiseta Básica" required>
+              </label>
+              <label>
+                Descrição
+                <input name="productDescription" type="text" placeholder="Descrição do produto">
+              </label>
+              <label>
+                Preço (R$)
+                <input name="productPrice" type="number" step="0.01" placeholder="49.90" required>
+              </label>
+              <label>
+                Categoria
+                <input name="productCategory" type="text" placeholder="Ex.: Camisetas" required>
+              </label>
+              <label>
+                Tamanhos (separados por vírgula)
+                <input name="productSizes" type="text" placeholder="P, M, G, GG">
+              </label>
+              <label>
+                Cores (separadas por vírgula)
+                <input name="productColors" type="text" placeholder="Branco, Preto, Cinza">
+              </label>
+              <button type="submit" class="primary">Adicionar Produto</button>
+            </form>
+          </section>
+
+          <section class="card field-list">
+            <header>
+              <h3>Produtos Cadastrados</h3>
+              <p class="muted">Gerencie seu catálogo</p>
+            </header>
+            <div id="productsContainer" class="list-body empty">
+              <p class="muted">Nenhum produto cadastrado ainda.</p>
+            </div>
+          </section>
+        </section>
+
+        <section class="panel preview-panel">
+          <header class="panel-header">
+            <div>
+              <p class="eyebrow">Experiência do Cliente</p>
+              <h2>Prévia ao vivo</h2>
+            </div>
+            <div class="live-pill">ao vivo</div>
+          </header>
+          <div class="preview-card">
+            <div class="preview-hero">
+              <div class="hero-icon" id="heroEmojiPreview">👕</div>
+              <div>
+                <h3 id="previewTitle">Nome da Loja</h3>
+                <p id="previewDescription">Descrição da loja.</p>
+              </div>
+            </div>
+            
+            <div class="cart-preview" id="cartPreview">
+              <div class="cart-header">
+                <h4>Carrinho de Compras</h4>
+                <div class="cart-total">
+                  Total: <span id="cartTotal">R$ 0,00</span>
+                </div>
+              </div>
+              <div class="cart-items"></div>
+            </div>
+            
+            <form id="orderForm" class="preview-form"></form>
+          </div>
+          <section class="card submissions">
+            <header>
+              <h3>Últimos Pedidos</h3>
+              <button id="clearOrders" type="button" class="ghost-button">Limpar histórico</button>
+            </header>
+            <div id="ordersLog" class="log"></div>
+          </section>
+        </section>
+      </main>
+    </section>
+
+    <section class="view booking-view" data-view="loja">
+      <div class="booking-hero">
+        <div>
+          <p class="eyebrow">Loja Virtual</p>
+          <h2>Compre suas roupas favoritas online</h2>
+          <p>Esta é a versão final que seus clientes veem. As alterações feitas no painel refletem aqui
+            instantaneamente.</p>
+        </div>
+        <div class="cal-slot">
+          <p>Frete grátis</p>
+          <strong>Acima de R$ 150</strong>
+        </div>
+      </div>
+      <div class="booking-layout">
+        <div class="card booking-info">
+          <h3>Filtro de Produtos</h3>
+          <select id="categoriesFilter" class="category-filter">
+            <option value="all">Todas categorias</option>
+          </select>
+          <div class="store-info">
+            <h4>Informações da Loja</h4>
+            <ul>
+              <li>✅ Frete rápido para todo Brasil</li>
+              <li>🔄 Troca grátis em 30 dias</li>
+              <li>🔒 Pagamento 100% seguro</li>
+              <li>📞 Atendimento personalizado</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="store-main">
+          <div class="products-grid" id="productsSection">
+           
+          </div>
+          
+          <div class="preview-card booking-card">
+            <div class="preview-hero">
+              <div class="hero-icon" id="publicHeroEmoji">👕</div>
+              <div>
+                <h3 id="publicTitle">Nome da Loja</h3>
+                <p id="publicDescription">Faça suas compras com facilidade.</p>
+              </div>
+            </div>
+            
+            <div class="cart-preview" id="publicCartPreview">
+              <div class="cart-header">
+                <h4>Seu Carrinho</h4>
+                <div class="cart-total">
+                  Total: <span id="publicCartTotal">R$ 0,00</span>
+                </div>
+              </div>
+              <div class="cart-items"></div>
+            </div>
+            
+            <form id="publicOrderForm" class="preview-form"></form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <template id="fieldRowTemplate">
+    <article class="field-row">
+      <div>
+        <p class="label"></p>
+        <span class="type"></span>
+      </div>
+      <div class="actions">
+        <button class="icon move-up" type="button" title="Subir">⬆</button>
+        <button class="icon move-down" type="button" title="Descer">⬇</button>
+        <button class="icon delete" type="button" title="Remover">×</button>
+      </div>
+    </article>
+  </template>
+
+  <template id="selectTemplate">
+    <label class="preview-field">
+      <span></span>
+      <select></select>
+    </label>
+  </template>
+
+  <template id="inputTemplate">
+    <label class="preview-field">
+      <span></span>
+      <input />
+    </label>
+  </template>
+
+  <template id="textareaTemplate">
+    <label class="preview-field">
+      <span></span>
+      <textarea rows="3"></textarea>
+    </label>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
